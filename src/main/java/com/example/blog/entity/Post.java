@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
                 @UniqueConstraint(columnNames = {"title"})
         }
 )
+
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

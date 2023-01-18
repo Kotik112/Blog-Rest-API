@@ -5,6 +5,7 @@ import com.example.blog.payload.PostDto;
 import com.example.blog.repository.PostRepository;
 import com.example.blog.service.PostService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +45,29 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto getPostById(Long id) {
+    public PostDto getPostById(@PathVariable(name = "id") Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Post not found with id: " + id));
         return mapToDto(post);
+    }
+
+    @Override
+    public PostDto updatePost(Long id, PostDto postDto) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Post not found with id: " + id));
+
+        post.setTitle(postDto.getTitle());
+        post.setContent(postDto.getContent());
+
+        Post updatedPost = postRepository.save(post);
+
+        return mapToDto(updatedPost);
+    }
+
+    @Override
+    public String deletePost(Long id) {
+        postRepository.deleteById(id);
+        return "Post deleted successfully";
     }
 
     public PostDto mapToDto(Post post) {
@@ -68,4 +88,5 @@ public class PostServiceImpl implements PostService {
         post.setContent(postDto.getContent());
         return post;
     }
+
 }

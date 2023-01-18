@@ -3,6 +3,7 @@ package com.example.blog.controller;
 
 import com.example.blog.payload.PostDto;
 import com.example.blog.service.PostService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,5 +32,16 @@ public class PostController {
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> getPost(@PathVariable Long id) {
         return new ResponseEntity<>(postService.getPostById(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PostDto> updatePost(@PathVariable("id") Long id, @RequestBody PostDto postDto) {
+        return new ResponseEntity<>(postService.updatePost(id, postDto), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable("id") Long id) {
+        postService.deletePost(id);
+        return new ResponseEntity<>("Post deleted successfully", HttpStatus.OK);
     }
 }
