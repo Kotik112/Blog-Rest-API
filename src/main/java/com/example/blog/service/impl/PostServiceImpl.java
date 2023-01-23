@@ -5,6 +5,7 @@ import com.example.blog.payload.PostDto;
 import com.example.blog.payload.PostResponse;
 import com.example.blog.repository.PostRepository;
 import com.example.blog.service.PostService;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -19,8 +20,10 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
+    private ModelMapper mapper;
 
-    public PostServiceImpl(PostRepository postRepository) {
+    public PostServiceImpl(PostRepository postRepository, ModelMapper modelMapper) {
+        this.mapper = modelMapper;
         this.postRepository = postRepository;
     }
 
@@ -85,20 +88,13 @@ public class PostServiceImpl implements PostService {
 
     public PostDto mapToDto(Post post) {
         // Convert Entity to DTO
-        PostDto postDto = new PostDto();
-        postDto.setId(post.getId());
-        postDto.setTitle(post.getTitle());
-        postDto.setDescription(post.getDescription());
-        postDto.setContent(post.getContent());
+        PostDto postDto = mapper.map(post, PostDto.class);
         return postDto;
     }
 
     public Post mapToEntity(PostDto postDto) {
         // Convert DTO to Entity
-        Post post = new Post();
-        post.setTitle(postDto.getTitle());
-        post.setDescription(postDto.getDescription());
-        post.setContent(postDto.getContent());
+        Post post = mapper.map(postDto, Post.class);
         return post;
     }
 
