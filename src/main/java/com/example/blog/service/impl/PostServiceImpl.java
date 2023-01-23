@@ -2,11 +2,16 @@ package com.example.blog.service.impl;
 
 import com.example.blog.entity.Post;
 import com.example.blog.payload.PostDto;
+import com.example.blog.payload.PostResponse;
 import com.example.blog.repository.PostRepository;
 import com.example.blog.service.PostService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,19 +34,27 @@ public class PostServiceImpl implements PostService {
         return mapToDto(newPost);
     }
 
+
     @Override
-    public List<PostDto> getAllPosts() {
-        List<Post> posts = postRepository.findAll();
+    public PostResponse getAllPosts(int page, int size, String sortBy, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
-        List<PostDto> postDtoList = new ArrayList<>();
+        Pageable pageable = PageRequest.of(page, size, sort);
 
-        for (Post post : posts) {
-            postDtoList.add(mapToDto(post));
-        }
+        Page<Post> posts = postRepository.findAll(pageable);
 
-        // return posts.stream().map(post -> mapToDto(post)).collect(Collectors.toList());
+        List<Post> listOfPosts = posts.getContent();
 
-        return postDtoList;
+        List<PostDto> content = listOfPosts.stream().map(this::mapToDto).toList();
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(content);
+        postResponse.setPage(page);
+        postResponse.setSize(size);
+        postResponse.setTotalElements(posts.getTotalElements());
+        postResponse.setTotalPages(posts.getTotalPages());
+        postResponse.setLast(posts.isLast());
+
+        return postResponse;
     }
 
     @Override

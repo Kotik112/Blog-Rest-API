@@ -2,13 +2,13 @@ package com.example.blog.controller;
 
 
 import com.example.blog.payload.PostDto;
+import com.example.blog.payload.PostResponse;
 import com.example.blog.service.PostService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.blog.utils.AppConstants;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -25,8 +25,13 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PostDto>> getAllPosts() {
-        return new ResponseEntity<>(postService.getAllPosts(), HttpStatus.OK);
+    public ResponseEntity<PostResponse> getAllPosts(
+            @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int page,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int size,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDirection
+    ) {
+        return new ResponseEntity<>(postService.getAllPosts(page, size, sortBy, sortDirection), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
