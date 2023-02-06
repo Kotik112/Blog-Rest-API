@@ -20,7 +20,7 @@ public class CommentController {
 
 
     public CommentController(CommentService commentService,
-                             PostRepository postRepository) {
+                                PostRepository postRepository) {
         this.commentService = commentService;
         this.postRepository = postRepository;
     }
