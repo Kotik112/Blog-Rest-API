@@ -1,7 +1,7 @@
 package com.example.blog.config;
 
-import com.example.blog.entity.JwtAuthenticationFilter;
 import com.example.blog.security.JwtAuthenticationEntryPoint;
+import com.example.blog.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,20 +20,22 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final UserDetailsService userDetailsService;
-    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
-    private final JwtAuthenticationFilter authenticationFilter;
+    private UserDetailsService userDetailsService;
 
-    SecurityConfig(UserDetailsService userDetailsService,
-                   JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-                   JwtAuthenticationFilter authenticationFilter) {
+    private JwtAuthenticationEntryPoint authenticationEntryPoint;
+
+    private JwtAuthenticationFilter authenticationFilter;
+
+    public SecurityConfig(UserDetailsService userDetailsService,
+                          JwtAuthenticationEntryPoint authenticationEntryPoint,
+                          JwtAuthenticationFilter authenticationFilter){
         this.userDetailsService = userDetailsService;
-        this.authenticationEntryPoint = jwtAuthenticationEntryPoint;
+        this.authenticationEntryPoint = authenticationEntryPoint;
         this.authenticationFilter = authenticationFilter;
     }
 
     @Bean
-    public static PasswordEncoder passwordEncoder() {
+    public static PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
@@ -49,6 +51,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) ->
                         //authorize.anyRequest().authenticated()
                         authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+                                //.requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
                                 .requestMatchers("/api/auth/**").permitAll()
                                 .anyRequest().authenticated()
 
@@ -64,10 +67,10 @@ public class SecurityConfig {
     }
 
 //    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails kotik = User.builder()
-//                .username("kotik")
-//                .password(passwordEncoder().encode("okomos"))
+//    public UserDetailsService userDetailsService(){
+//        UserDetails ramesh = User.builder()
+//                .username("ramesh")
+//                .password(passwordEncoder().encode("ramesh"))
 //                .roles("USER")
 //                .build();
 //
@@ -76,7 +79,6 @@ public class SecurityConfig {
 //                .password(passwordEncoder().encode("admin"))
 //                .roles("ADMIN")
 //                .build();
-//
-//        return new InMemoryUserDetailsManager(kotik, admin);
+//        return new InMemoryUserDetailsManager(ramesh, admin);
 //    }
 }
