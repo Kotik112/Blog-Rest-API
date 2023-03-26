@@ -1,8 +1,11 @@
 package com.example.blog.service.impl;
 
+import com.example.blog.entity.Category;
 import com.example.blog.entity.Post;
+import com.example.blog.exception.ResourceNotFoundException;
 import com.example.blog.payload.PostDto;
 import com.example.blog.payload.PostResponse;
+import com.example.blog.repository.CategoryRepository;
 import com.example.blog.repository.PostRepository;
 import com.example.blog.service.PostService;
 import org.modelmapper.ModelMapper;
@@ -13,24 +16,31 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.data.domain.Pageable;
-import java.util.ArrayList;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
+    private final CategoryRepository categoryRepository;
     private ModelMapper mapper;
-
-    public PostServiceImpl(PostRepository postRepository, ModelMapper modelMapper) {
-        this.mapper = modelMapper;
+    
+    public PostServiceImpl(PostRepository postRepository, CategoryRepository categoryRepository, ModelMapper mapper) {
         this.postRepository = postRepository;
+        this.categoryRepository = categoryRepository;
+        this.mapper = mapper;
     }
-
+    
+    
     @Override
     public PostDto createPost(PostDto postDto) {
+        Category category = findByIdOrThrow(postDto);
+    
         //Convert DTO to Entity
         Post post = mapToEntity(postDto);
+        post.setCategory(category);
 
         Post newPost = postRepository.save(post);
 
@@ -59,7 +69,15 @@ public class PostServiceImpl implements PostService {
 
         return postResponse;
     }
-
+    
+    @Override
+    public List<PostDto> getPostsByCategoryId(Long categoryId) {
+        Category category = findCategoryByIdOrThrow(categoryId);
+        List<Post> posts = postRepository.findPostsByCategoryId(categoryId);
+        return posts.stream().map((post) -> mapToDto(post))
+                                    .collect(Collectors.toList());
+    }
+    
     @Override
     public PostDto getPostById(@PathVariable(name = "id") Long id) {
         Post post = postRepository.findById(id)
@@ -69,11 +87,13 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto updatePost(Long id, PostDto postDto) {
-        Post post = postRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Post not found with id: " + id));
+        Category category = findByIdOrThrow(postDto);
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
 
         post.setTitle(postDto.getTitle());
+        post.setDescription(postDto.getDescription());
         post.setContent(postDto.getContent());
+        post.setCategory(category);
 
         Post updatedPost = postRepository.save(post);
 
@@ -81,9 +101,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public String deletePost(Long id) {
-        postRepository.deleteById(id);
-        return "Post deleted successfully";
+    public void deletePost(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+        postRepository.delete(post);
     }
 
     public PostDto mapToDto(Post post) {
@@ -96,6 +116,15 @@ public class PostServiceImpl implements PostService {
         // Convert DTO to Entity
         Post post = mapper.map(postDto, Post.class);
         return post;
+    }
+    
+    private Category findByIdOrThrow(PostDto postDto) {
+        return categoryRepository.findById(postDto.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Category", "id", postDto.getCategoryId()));
+    }
+    
+    private Category findCategoryByIdOrThrow(Long categoryId) {
+        return categoryRepository.findById(categoryId)
+                       .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
     }
 
 }

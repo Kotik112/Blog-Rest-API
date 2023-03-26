@@ -5,7 +5,9 @@ import com.example.blog.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -43,8 +45,15 @@ public class CategoryController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{id}")
-    public ResponseEntity<CategoryDto> updateCategory(CategoryDto categoryToUpdate, Long id) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<CategoryDto> updateCategory(@RequestBody CategoryDto categoryToUpdate, @PathVariable Long id) {
         return ResponseEntity.ok(categoryService.updateCategory(categoryToUpdate, id));
+    }
+    
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCategory(@PathVariable Long id) {
+        categoryService.deleteCategory(id);
+        return ResponseEntity.ok("Category successfully deleted!");
     }
 }

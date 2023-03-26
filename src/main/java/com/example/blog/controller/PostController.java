@@ -11,6 +11,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.example.blog.utils.AppConstants;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/posts")
@@ -21,7 +23,7 @@ public class PostController {
         this.postService = postService;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
@@ -40,6 +42,11 @@ public class PostController {
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> getPost(@PathVariable Long id) {
         return new ResponseEntity<>(postService.getPostById(id), HttpStatus.OK);
+    }
+    
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<List<PostDto>> getAllPostsByCategoryId(@PathVariable("categoryId") Long id) {
+        return ResponseEntity.ok(postService.getPostsByCategoryId(id));
     }
 
     @PreAuthorize("hasRole('ADMIN')")

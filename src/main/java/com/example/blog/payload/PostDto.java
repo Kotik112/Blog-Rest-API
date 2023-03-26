@@ -1,6 +1,8 @@
 package com.example.blog.payload;
 
 
+import com.example.blog.entity.Category;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -18,5 +20,6 @@ public class PostDto {
     private String description;
     @NotEmpty
     private String content;
+    private Long categoryId;
     private Set<CommentDto> comments;
 }
