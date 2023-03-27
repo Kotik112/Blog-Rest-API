@@ -20,11 +20,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SecurityConfig {
 
-  private UserDetailsService userDetailsService;
+  private final UserDetailsService userDetailsService;
 
-  private JwtAuthenticationEntryPoint authenticationEntryPoint;
+  private final JwtAuthenticationEntryPoint authenticationEntryPoint;
 
-  private JwtAuthenticationFilter authenticationFilter;
+  private final JwtAuthenticationFilter authenticationFilter;
 
   public SecurityConfig(
       UserDetailsService userDetailsService,
@@ -57,7 +57,10 @@ public class SecurityConfig {
                 authorize
                     .requestMatchers(HttpMethod.GET, "/api/**")
                     .permitAll()
-                    // .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
+                    .requestMatchers("/swagger-ui/**")
+                    .permitAll()
+                    .requestMatchers("/v3/api-docs/**")
+                    .permitAll()
                     .requestMatchers("/api/auth/**")
                     .permitAll()
                     .anyRequest()

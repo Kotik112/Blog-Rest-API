@@ -14,10 +14,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenProvider {
 
-  @Value("${app.jwt-secret}")
+  @Value("${app.jwt.secret}")
   private String jwtSecret;
 
-  @Value("${app-jwt-expiration-milliseconds}")
+  @Value("${app.jwt.expiration-milliseconds}")
   private long jwtExpirationDate;
 
   // generate JWT token
@@ -27,15 +27,13 @@ public class JwtTokenProvider {
     Date currentDate = new Date();
 
     Date expireDate = new Date(currentDate.getTime() + jwtExpirationDate);
-
-    String token =
-        Jwts.builder()
+  
+    return Jwts.builder()
             .setSubject(username)
             .setIssuedAt(new Date())
             .setExpiration(expireDate)
             .signWith(key())
             .compact();
-    return token;
   }
 
   private Key key() {
@@ -46,8 +44,7 @@ public class JwtTokenProvider {
   public String getUsername(String token) {
     Claims claims =
         Jwts.parserBuilder().setSigningKey(key()).build().parseClaimsJws(token).getBody();
-    String username = claims.getSubject();
-    return username;
+    return claims.getSubject();
   }
 
   // validate Jwt token
