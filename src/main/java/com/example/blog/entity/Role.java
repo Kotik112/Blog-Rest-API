@@ -1,6 +1,5 @@
 package com.example.blog.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,9 +18,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "roles")
 public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
-    private String name;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", nullable = false)
+  private Long id;
+
+  private String name;
 }

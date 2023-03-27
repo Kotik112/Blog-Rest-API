@@ -8,25 +8,24 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Entity
 @Table(name = "comments")
 public class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
+  private Long id;
 
-    @Column(name = "name")
-    private String name;
+  @Column(name = "name")
+  private String name;
 
-    @Column(name = "email")
-    private String email;
+  @Column(name = "email")
+  private String email;
 
-    @Column(name = "body")
-    private String body;
+  @Column(name = "body")
+  private String body;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id", nullable = false)
-    private Post post;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "post_id", nullable = false)
+  private Post post;
 }

@@ -20,65 +20,71 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private UserDetailsService userDetailsService;
+  private UserDetailsService userDetailsService;
 
-    private JwtAuthenticationEntryPoint authenticationEntryPoint;
+  private JwtAuthenticationEntryPoint authenticationEntryPoint;
 
-    private JwtAuthenticationFilter authenticationFilter;
+  private JwtAuthenticationFilter authenticationFilter;
 
-    public SecurityConfig(UserDetailsService userDetailsService,
-                          JwtAuthenticationEntryPoint authenticationEntryPoint,
-                          JwtAuthenticationFilter authenticationFilter){
-        this.userDetailsService = userDetailsService;
-        this.authenticationEntryPoint = authenticationEntryPoint;
-        this.authenticationFilter = authenticationFilter;
-    }
+  public SecurityConfig(
+      UserDetailsService userDetailsService,
+      JwtAuthenticationEntryPoint authenticationEntryPoint,
+      JwtAuthenticationFilter authenticationFilter) {
+    this.userDetailsService = userDetailsService;
+    this.authenticationEntryPoint = authenticationEntryPoint;
+    this.authenticationFilter = authenticationFilter;
+  }
 
-    @Bean
-    public static PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public static PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
+  @Bean
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
+      throws Exception {
+    return configuration.getAuthenticationManager();
+  }
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  @Bean
+  SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf().disable()
-                .authorizeHttpRequests((authorize) ->
-                        //authorize.anyRequest().authenticated()
-                        authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
-                                //.requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
-                                .requestMatchers("/api/auth/**").permitAll()
-                                .anyRequest().authenticated()
+    http.csrf()
+        .disable()
+        .authorizeHttpRequests(
+            (authorize) ->
+                // authorize.anyRequest().authenticated()
+                authorize
+                    .requestMatchers(HttpMethod.GET, "/api/**")
+                    .permitAll()
+                    // .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
+                    .requestMatchers("/api/auth/**")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated())
+        .exceptionHandling(
+            exception -> exception.authenticationEntryPoint(authenticationEntryPoint))
+        .sessionManagement(
+            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-                ).exceptionHandling( exception -> exception
-                        .authenticationEntryPoint(authenticationEntryPoint)
-                ).sessionManagement( session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
+    http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    return http.build();
+  }
 
-        return http.build();
-    }
-
-//    @Bean
-//    public UserDetailsService userDetailsService(){
-//        UserDetails ramesh = User.builder()
-//                .username("ramesh")
-//                .password(passwordEncoder().encode("ramesh"))
-//                .roles("USER")
-//                .build();
-//
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password(passwordEncoder().encode("admin"))
-//                .roles("ADMIN")
-//                .build();
-//        return new InMemoryUserDetailsManager(ramesh, admin);
-//    }
+  //    @Bean
+  //    public UserDetailsService userDetailsService(){
+  //        UserDetails ramesh = User.builder()
+  //                .username("ramesh")
+  //                .password(passwordEncoder().encode("ramesh"))
+  //                .roles("USER")
+  //                .build();
+  //
+  //        UserDetails admin = User.builder()
+  //                .username("admin")
+  //                .password(passwordEncoder().encode("admin"))
+  //                .roles("ADMIN")
+  //                .build();
+  //        return new InMemoryUserDetailsManager(ramesh, admin);
+  //    }
 }
