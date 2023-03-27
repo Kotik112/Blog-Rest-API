@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class CategoryServiceImpl implements CategoryService {
 
   private final CategoryRepository categoryRepository;
-  private ModelMapper modelMapper;
+  private final ModelMapper modelMapper;
 
   public CategoryServiceImpl(CategoryRepository categoryRepository, ModelMapper modelMapper) {
     this.categoryRepository = categoryRepository;
