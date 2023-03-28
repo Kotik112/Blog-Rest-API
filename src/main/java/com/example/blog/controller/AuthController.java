@@ -1,5 +1,7 @@
 package com.example.blog.controller;
 
+import static com.example.blog.utils.AppConstants.BASE_AUTH_URL;
+
 import com.example.blog.payload.JWTAuthResponse;
 import com.example.blog.payload.LoginDto;
 import com.example.blog.payload.RegisterDto;
@@ -12,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping(BASE_AUTH_URL)
 public class AuthController {
-  private AuthService authService;
+  private final AuthService authService;
 
   public AuthController(AuthService authService) {
     this.authService = authService;

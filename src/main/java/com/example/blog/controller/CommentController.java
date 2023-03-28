@@ -1,7 +1,8 @@
 package com.example.blog.controller;
 
+import static com.example.blog.utils.AppConstants.BASE_URL;
+
 import com.example.blog.payload.CommentDto;
-import com.example.blog.repository.PostRepository;
 import com.example.blog.service.CommentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -11,16 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping(BASE_URL)
 @Tag(name = "CRUD REST APIs for Comment Resource")
 public class CommentController {
 
   private final CommentService commentService;
-  private final PostRepository postRepository;
 
-  public CommentController(CommentService commentService, PostRepository postRepository) {
+  public CommentController(CommentService commentService) {
     this.commentService = commentService;
-    this.postRepository = postRepository;
   }
 
   @PostMapping("/{postId}/comments")

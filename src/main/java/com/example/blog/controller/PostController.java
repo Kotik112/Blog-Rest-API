@@ -1,5 +1,7 @@
 package com.example.blog.controller;
 
+import static com.example.blog.utils.AppConstants.BASE_URL;
+
 import com.example.blog.payload.PostDto;
 import com.example.blog.payload.PostResponse;
 import com.example.blog.service.PostService;
@@ -16,7 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/posts")
+@RequestMapping(BASE_URL)
 @Tag(name = "CRUD REST APIs for Post Resource.")
 public class PostController {
   private final PostService postService;
@@ -31,7 +33,7 @@ public class PostController {
       summary = "Create Post REST API",
       description = "Create Post REST API is used to save post to the database.")
   @ApiResponse(responseCode = "201", description = "Http status 201 CREATED")
-  @PostMapping
+  @PostMapping()
   public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
     return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
   }

@@ -1,5 +1,7 @@
 package com.example.blog.controller;
 
+import static com.example.blog.utils.AppConstants.BASE_CATEGORY_URL;
+
 import com.example.blog.payload.CategoryDto;
 import com.example.blog.service.CategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping(BASE_CATEGORY_URL)
 @Tag(name = "CRUD REST APIs for Category Resource")
 public class CategoryController {
 
