@@ -27,13 +27,13 @@ public class JwtTokenProvider {
     Date currentDate = new Date();
 
     Date expireDate = new Date(currentDate.getTime() + jwtExpirationDate);
-  
+
     return Jwts.builder()
-            .setSubject(username)
-            .setIssuedAt(new Date())
-            .setExpiration(expireDate)
-            .signWith(key())
-            .compact();
+        .setSubject(username)
+        .setIssuedAt(new Date())
+        .setExpiration(expireDate)
+        .signWith(key())
+        .compact();
   }
 
   private Key key() {
