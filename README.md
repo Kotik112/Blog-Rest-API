@@ -9,11 +9,13 @@ This is a portfolio REST API built with Spring Boot that allows users to perform
 ### Authentication
 | Endpoint        | HTTP Method | Description                                        |
 |-----------------|-------------|----------------------------------------------------|
-| ```/login```    | POST        | Authenticate a user and return a JWT access token. |
-| ```/register``` | POST        | Register a new user.                               | 
+| ```/auth/login```    | POST        | Authenticate a user and return a JWT access token. |
+| ```/auth/register``` | POST        | Register a new user.                               | 
 
 
 ### Blog Posts
+All endpoints have a prefix of ```/api/v1/```. The base URL is omitted in the endpoints below.
+
 | Endpoint                           | HTTP Method | Description                                       |
 |------------------------------------|-------------|---------------------------------------------------|
 | ```/posts   ```                    | POST        | Create a new blog post.                           |
@@ -22,7 +24,6 @@ This is a portfolio REST API built with Spring Boot that allows users to perform
 | ```/posts/{id} ```                 | 	PUT        | 	Update an existing blog post by ID.              |
 | ```/posts/{id}```	                 | DELETE	     | Delete an existing blog post by ID.               |
 | ```/posts/category/{categoryId}``` | 	GET        | 	Retrieve all blog posts belonging to a category. |
-
 
 ### Blog Comments
 | Endpoint                            | HTTP Method | Description                                      |
@@ -36,11 +37,11 @@ This is a portfolio REST API built with Spring Boot that allows users to perform
 ### Blog Categories
 | Endpoint     | HTTP Method | Description                                                       |
 |--------------|-------------|-------------------------------------------------------------------|
-| ```/```	     | POST        | Add a new category to the system. Requires admin access.          |
-| ```/{id}```  | GET         | Get the category with the specified ID.                           |
-| ```/   ```   | GET         | Get a list of all categories in the system.                       |
-| ```/{id}```  | PATCH       | Update the category with the specified ID. Requires admin access. |                               
-| ```/{id} ``` | DELETE      | Delete the category with the specified ID. Requires admin access. |                              
+| ```/categories/```	     | POST        | Add a new category to the system. Requires admin access.          |
+| ```/categories/{id}```  | GET         | Get the category with the specified ID.                           |
+| ```/categories/   ```   | GET         | Get a list of all categories in the system.                       |
+| ```/categories/{id}```  | PATCH       | Update the category with the specified ID. Requires admin access. |                               
+| ```/categories/{id} ``` | DELETE      | Delete the category with the specified ID. Requires admin access. |                              
 
 
 ## Security:
