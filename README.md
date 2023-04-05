@@ -1,7 +1,7 @@
-### Note That this project is a WIP and is not yet complete.
 ### To be added: JUnit tests, Flyway migrations, Docker support, SonarQube integration, and more.
 
 # Spring Boot REST API for Blog Posts and Comments
+### Note That this project is a WIP and is not yet complete.
 This is a portfolio REST API built with Spring Boot that allows users to perform CRUD (Create, Read, Update, Delete) operations on blog posts and comments. The API also provides JWT security to ensure that only authenticated users can access protected resources. Additionally, the API has swagger UI support.
 
 ## API Endpoints
