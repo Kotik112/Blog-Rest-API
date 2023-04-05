@@ -1,4 +1,5 @@
-### To be added: 
+# WIP
+That this project is a WIP and is not yet complete. The following features are still being added (in no particular order):
 - Testcontainers
 - Unit tests
 - Integration tests
@@ -8,7 +9,6 @@
 - Docker support
 
 # Spring Boot REST API for Blog Posts and Comments
-### Note That this project is a WIP and is not yet complete.
 This is a portfolio REST API built with Spring Boot that allows users to perform CRUD (Create, Read, Update, Delete) operations on blog posts and comments. The API also provides JWT security to ensure that only authenticated users can access protected resources. Additionally, the API has swagger UI support.
 
 ## API Endpoints
