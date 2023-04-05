@@ -27,8 +27,8 @@ Make sure to register and login to test the API endpoints.
 | Endpoint                           | HTTP Method | Description                                      | Requires admin role |
 |------------------------------------|-------------|--------------------------------------------------|---------------------|
 | ```/posts```                       | POST        | Create a new blog post.                          | :heavy_check_mark:  |
-| ```/posts```                       | GET         | Retrieve a paginated list of all blog posts.     | :heavy_check_mark:  |
-| ```/posts/{id}```                  | GET         | Retrieve a single blog post by ID.               | :heavy_check_mark:  |
+| ```/posts```                       | GET         | Retrieve a paginated list of all blog posts.     | :x:                 |
+| ```/posts/{id}```                  | GET         | Retrieve a single blog post by ID.               | :x:                 |
 | ```/posts/{id}```                  | PUT         | 	Update an existing blog post by ID.             | :heavy_check_mark:  |
 | ```/posts/{id}```                  | DELETE	     | Delete an existing blog post by ID.              | :heavy_check_mark:  |
 | ```/posts/category/{categoryId}``` | GET         | Retrieve all blog posts belonging to a category. | :heavy_check_mark:  |
