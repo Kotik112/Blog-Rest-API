@@ -1,10 +1,19 @@
-### To be added: JUnit tests, Flyway migrations, Docker support, SonarQube integration, and more.
+### To be added: 
+- Testcontainers
+- Unit tests
+- Integration tests
+- Flyway migrations
+- CI/CD pipeline
+- SonarQube integration
+- Docker support
 
 # Spring Boot REST API for Blog Posts and Comments
 ### Note That this project is a WIP and is not yet complete.
 This is a portfolio REST API built with Spring Boot that allows users to perform CRUD (Create, Read, Update, Delete) operations on blog posts and comments. The API also provides JWT security to ensure that only authenticated users can access protected resources. Additionally, the API has swagger UI support.
 
 ## API Endpoints
+All endpoints have a prefix of ```/api/v1/```. The base URL is omitted in the endpoints below.
+Make sure to register and login to test the API endpoints.
 
 ### Authentication
 | Endpoint        | HTTP Method | Description                                        |
@@ -14,35 +23,35 @@ This is a portfolio REST API built with Spring Boot that allows users to perform
 
 
 ### Blog Posts
-All endpoints have a prefix of ```/api/v1/```. The base URL is omitted in the endpoints below.
 
-| Endpoint                           | HTTP Method | Description                                       |
-|------------------------------------|-------------|---------------------------------------------------|
-| ```/posts   ```                    | POST        | Create a new blog post.                           |
-| ```/posts    ```                   | GET         | Retrieve a paginated list of all blog posts.      |
-| ```/posts/{id} ```                 | GET         | Retrieve a single blog post by ID.                |
-| ```/posts/{id} ```                 | 	PUT        | 	Update an existing blog post by ID.              |
-| ```/posts/{id}```	                 | DELETE	     | Delete an existing blog post by ID.               |
-| ```/posts/category/{categoryId}``` | 	GET        | 	Retrieve all blog posts belonging to a category. |
+| Endpoint                           | HTTP Method | Description                                      | Requires admin role |
+|------------------------------------|-------------|--------------------------------------------------|---------------------|
+| ```/posts```                       | POST        | Create a new blog post.                          | :heavy_check_mark:  |
+| ```/posts```                       | GET         | Retrieve a paginated list of all blog posts.     | :heavy_check_mark:  |
+| ```/posts/{id}```                  | GET         | Retrieve a single blog post by ID.               | :heavy_check_mark:  |
+| ```/posts/{id}```                  | PUT         | 	Update an existing blog post by ID.             | :heavy_check_mark:  |
+| ```/posts/{id}```                  | DELETE	     | Delete an existing blog post by ID.              | :heavy_check_mark:  |
+| ```/posts/category/{categoryId}``` | GET         | Retrieve all blog posts belonging to a category. | :heavy_check_mark:  |
 
 ### Blog Comments
-| Endpoint                            | HTTP Method | Description                                      |
-|-------------------------------------|-------------|--------------------------------------------------|
-| ```/posts/{postId}/comments```      | 	POST       | Create a new comment on a blog post.             |
-| ```/posts/{postId}/comments```      | 	GET	       | Retrieve all comments on a blog post.            |
-| ```/posts/{postId}/comments/{id}``` | 	GET	       | Retrieve a single comment on a blog post by ID.  |
-| ```/posts/{postId}/comments/{id}``` | 	PUT	       | Update an existing comment on a blog post by ID. |
-| ```/posts/{postId}/comments/{id}``` | DELETE      | Delete an existing comment on a blog post by ID. |
+| Endpoint                            | HTTP Method | Description                                      | Requires admin role |
+|-------------------------------------|-------------|--------------------------------------------------|---------------------|
+| ```/posts/{postId}/comments```      | 	POST       | Create a new comment on a blog post.             | :heavy_check_mark:  |
+| ```/posts/{postId}/comments```      | 	GET	       | Retrieve all comments on a blog post.            | :x:                 |
+| ```/posts/{postId}/comments/{id}``` | 	GET	       | Retrieve a single comment on a blog post by ID.  | :x:                 |
+| ```/posts/{postId}/comments/{id}``` | 	PUT	       | Update an existing comment on a blog post by ID. | :heavy_check_mark:  |
+| ```/posts/{postId}/comments/{id}``` | DELETE      | Delete an existing comment on a blog post by ID. | :heavy_check_mark:  |
 
 ### Blog Categories
-| Endpoint     | HTTP Method | Description                                                       |
-|--------------|-------------|-------------------------------------------------------------------|
-| ```/categories/```	     | POST        | Add a new category to the system. Requires admin access.          |
-| ```/categories/{id}```  | GET         | Get the category with the specified ID.                           |
-| ```/categories/   ```   | GET         | Get a list of all categories in the system.                       |
-| ```/categories/{id}```  | PATCH       | Update the category with the specified ID. Requires admin access. |                               
-| ```/categories/{id} ``` | DELETE      | Delete the category with the specified ID. Requires admin access. |                              
+| Endpoint                | HTTP Method | Description                                 | Requires admin role |
+|-------------------------|-------------|---------------------------------------------|---------------------|
+| ```/categories/```	     | POST        | Add a new category to the system.           | :heavy_check_mark:  |
+| ```/categories/{id}```  | GET         | Get the category with the specified ID.     | :x:                 |
+| ```/categories/   ```   | GET         | Get a list of all categories in the system. | :x:                 |
+| ```/categories/{id}```  | PATCH       | Update the category with the specified ID.  | :heavy_check_mark:  |                       
+| ```/categories/{id} ``` | DELETE      | Delete the category with the specified ID.  | :heavy_check_mark:  |                          
 
+Check out the Swagger UI for more details on the API endpoints. (http://localhost:8080/swagger-ui/index.html)
 
 ## Security:
 This API uses JWT (JSON Web Tokens) for authentication and authorization. Users must authenticate with the ```/login``` endpoint to receive a JWT access token, which is then required for accessing any protected resource.
