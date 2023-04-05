@@ -7,15 +7,15 @@ This is a portfolio REST API built with Spring Boot that allows users to perform
 ## API Endpoints
 
 ### Authentication
-| Endpoint  | HTTP Method | Description                                        |
-|-----------|-------------|----------------------------------------------------|
+| Endpoint        | HTTP Method | Description                                        |
+|-----------------|-------------|----------------------------------------------------|
 | ```/login```    | POST        | Authenticate a user and return a JWT access token. |
 | ```/register``` | POST        | Register a new user.                               | 
 
 
 ### Blog Posts
-| Endpoint                     | HTTP Method | Description                                       |
-|------------------------------|-------------|---------------------------------------------------|
+| Endpoint                           | HTTP Method | Description                                       |
+|------------------------------------|-------------|---------------------------------------------------|
 | ```/posts   ```                    | POST        | Create a new blog post.                           |
 | ```/posts    ```                   | GET         | Retrieve a paginated list of all blog posts.      |
 | ```/posts/{id} ```                 | GET         | Retrieve a single blog post by ID.                |
@@ -25,8 +25,8 @@ This is a portfolio REST API built with Spring Boot that allows users to perform
 
 
 ### Blog Comments
-| Endpoint                      | HTTP Method | Description                                      |
-|-------------------------------|-------------|--------------------------------------------------|
+| Endpoint                            | HTTP Method | Description                                      |
+|-------------------------------------|-------------|--------------------------------------------------|
 | ```/posts/{postId}/comments```      | 	POST       | Create a new comment on a blog post.             |
 | ```/posts/{postId}/comments```      | 	GET	       | Retrieve all comments on a blog post.            |
 | ```/posts/{postId}/comments/{id}``` | 	GET	       | Retrieve a single comment on a blog post by ID.  |
@@ -34,13 +34,13 @@ This is a portfolio REST API built with Spring Boot that allows users to perform
 | ```/posts/{postId}/comments/{id}``` | DELETE      | Delete an existing comment on a blog post by ID. |
 
 ### Blog Categories
-| Endpoint | HTTP Method | Description                                                       |
-|----------|-------------|-------------------------------------------------------------------|
-| ```/```	       | POST        | Add a new category to the system. Requires admin access.          |
-| ```/{id}```    | GET         | Get the category with the specified ID.                           |
-| ```/   ```     | GET         | Get a list of all categories in the system.                       |
-| ```/{id}```    | PATCH       | Update the category with the specified ID. Requires admin access. |                               
-| ```/{id} ```   | DELETE      | Delete the category with the specified ID. Requires admin access. |                              
+| Endpoint     | HTTP Method | Description                                                       |
+|--------------|-------------|-------------------------------------------------------------------|
+| ```/```	     | POST        | Add a new category to the system. Requires admin access.          |
+| ```/{id}```  | GET         | Get the category with the specified ID.                           |
+| ```/   ```   | GET         | Get a list of all categories in the system.                       |
+| ```/{id}```  | PATCH       | Update the category with the specified ID. Requires admin access. |                               
+| ```/{id} ``` | DELETE      | Delete the category with the specified ID. Requires admin access. |                              
 
 
 ## Security:
@@ -53,7 +53,7 @@ This API uses JWT (JSON Web Tokens) for authentication and authorization. Users 
 - MySQL
 - Hibernate Validator
 - Lombok
-- SpringDoc OpenAPI
+- SpringDoc OpenAPI 
 
 ## Getting Started
 To run the application locally, you will need to have MySQL installed and running. Then, follow these steps:
@@ -69,3 +69,6 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+
+Written by [Arman I.](https://www.linkedin.com/in/arman-iqbal-39803681/)
