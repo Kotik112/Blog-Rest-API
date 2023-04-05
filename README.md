@@ -4,7 +4,7 @@ That this project is a WIP and is not yet complete. The following features are s
 - Unit tests
 - Integration tests
 - Flyway migrations
-- CI/CD pipeline
+- CI pipeline with gh actions
 - SonarQube integration
 - Docker support
 
@@ -78,7 +78,4 @@ To run the application locally, you will need to have MySQL installed and runnin
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-
-Written by [Arman I.](https://www.linkedin.com/in/arman-iqbal-39803681/)
+This project is licensed under the MIT License - see the MIT_LICENSE file for details.
