@@ -13,7 +13,7 @@ This is a portfolio REST API built with Spring Boot that allows users to perform
 
 ## API Endpoints
 - All endpoints have a prefix of ```/api/v1/```. The base URL is omitted in the endpoints below.
-- Make sure to register and login to test the API endpoints.
+- Make sure to register and login to recieve a functional JWT. Use the JWT to authorize yourself to the endpoints that require admin role.
 
 ### Authentication
 | Endpoint        | HTTP Method | Description                                        |
