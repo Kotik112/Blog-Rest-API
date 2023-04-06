@@ -12,8 +12,8 @@ That this project is a WIP and is not yet complete. The following features are s
 This is a portfolio REST API built with Spring Boot that allows users to perform CRUD (Create, Read, Update, Delete) operations on blog posts and comments. The API also provides JWT security to ensure that only authenticated users can access protected resources. Additionally, the API has swagger UI support.
 
 ## API Endpoints
-All endpoints have a prefix of ```/api/v1/```. The base URL is omitted in the endpoints below.
-Make sure to register and login to test the API endpoints.
+- All endpoints have a prefix of ```/api/v1/```. The base URL is omitted in the endpoints below.
+- Make sure to register and login to recieve a functional JWT. Use the JWT to authorize yourself to the endpoints that require admin role.
 
 ### Authentication
 | Endpoint        | HTTP Method | Description                                        |
@@ -73,9 +73,6 @@ To run the application locally, you will need to have MySQL installed and runnin
 - Edit the ```application.yaml``` file to configure the database connection and other properties as needed.
 - Run the application using your favorite IDE or by running ./mvnw spring-boot:run in the terminal.
 - Use a REST API client like Postman to interact with the API endpoints. You can also use the Swagger UI to test the API endpoints.
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
 This project is licensed under the MIT License - see the MIT_LICENSE file for details.
