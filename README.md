@@ -74,8 +74,5 @@ To run the application locally, you will need to have MySQL installed and runnin
 - Run the application using your favorite IDE or by running ./mvnw spring-boot:run in the terminal.
 - Use a REST API client like Postman to interact with the API endpoints. You can also use the Swagger UI to test the API endpoints.
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
 ## License
 This project is licensed under the MIT License - see the MIT_LICENSE file for details.
