@@ -12,8 +12,8 @@ That this project is a WIP and is not yet complete. The following features are s
 This is a portfolio REST API built with Spring Boot that allows users to perform CRUD (Create, Read, Update, Delete) operations on blog posts and comments. The API also provides JWT security to ensure that only authenticated users can access protected resources. Additionally, the API has swagger UI support.
 
 ## API Endpoints
-All endpoints have a prefix of ```/api/v1/```. The base URL is omitted in the endpoints below.
-Make sure to register and login to test the API endpoints.
+- All endpoints have a prefix of ```/api/v1/```. The base URL is omitted in the endpoints below.
+- Make sure to register and login to test the API endpoints.
 
 ### Authentication
 | Endpoint        | HTTP Method | Description                                        |
