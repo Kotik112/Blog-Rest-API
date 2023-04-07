@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CommentServiceImpl implements CommentService {
-
+  private static final String COMMENT = "Comment";
   private final CommentRespository commentRespository;
   private final PostRepository postRepository;
   private final ModelMapper mapper;
@@ -55,7 +55,7 @@ public class CommentServiceImpl implements CommentService {
     Comment comment =
         commentRespository
             .findById(commentId)
-            .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
+            .orElseThrow(() -> new ResourceNotFoundException(COMMENT, "id", commentId));
 
     if (!comment.getPost().getId().equals(post.getId())) {
       throw new BlogAPIException(BAD_REQUEST, COMMENT_NOT_FOUND);
@@ -70,7 +70,7 @@ public class CommentServiceImpl implements CommentService {
     Comment comment =
         commentRespository
             .findById(commentId)
-            .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
+            .orElseThrow(() -> new ResourceNotFoundException(COMMENT, "id", commentId));
     if (!comment.getPost().getId().equals(post.getId())) {
       throw new BlogAPIException(BAD_REQUEST, COMMENT_NOT_FOUND);
     }
@@ -89,7 +89,7 @@ public class CommentServiceImpl implements CommentService {
     Comment comment =
         commentRespository
             .findById(commentId)
-            .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
+            .orElseThrow(() -> new ResourceNotFoundException(COMMENT, "id", commentId));
     if (!comment.getPost().getId().equals(post.getId())) {
       throw new BlogAPIException(BAD_REQUEST, COMMENT_NOT_FOUND);
     }
