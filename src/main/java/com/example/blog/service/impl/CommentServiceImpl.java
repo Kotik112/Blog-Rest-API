@@ -1,5 +1,8 @@
 package com.example.blog.service.impl;
 
+import static com.example.blog.utils.AppConstants.COMMENT_NOT_FOUND;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
 import com.example.blog.entity.Comment;
 import com.example.blog.entity.Post;
 import com.example.blog.exception.BlogAPIException;
@@ -12,16 +15,12 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-
 @Service
 public class CommentServiceImpl implements CommentService {
 
   private final CommentRespository commentRespository;
   private final PostRepository postRepository;
   private final ModelMapper mapper;
-  
-  private final String COMMENT_NOT_FOUND = "Comment does not belong to the given post";
 
   public CommentServiceImpl(
       CommentRespository commentRespository,
@@ -35,15 +34,9 @@ public class CommentServiceImpl implements CommentService {
   @Override
   public CommentDto createComment(long id, CommentDto commentDto) {
     Comment comment = mapToEntity(commentDto);
-    Post post =
-        postRepository
-            .findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
-    // Set post to comment
+    Post post = findPostById(id);
     comment.setPost(post);
-
     Comment newComment = commentRespository.save(comment);
-
     return mapToDto(newComment);
   }
 
@@ -65,8 +58,7 @@ public class CommentServiceImpl implements CommentService {
             .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
 
     if (!comment.getPost().getId().equals(post.getId())) {
-      throw new BlogAPIException(
-          BAD_REQUEST, COMMENT_NOT_FOUND);
+      throw new BlogAPIException(BAD_REQUEST, COMMENT_NOT_FOUND);
     }
 
     return mapToDto(comment);
@@ -74,17 +66,13 @@ public class CommentServiceImpl implements CommentService {
 
   @Override
   public CommentDto updateComment(long postId, long commentId, CommentDto commentDto) {
-    Post post =
-        postRepository
-            .findById(postId)
-            .orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId));
+    Post post = findPostById(postId);
     Comment comment =
         commentRespository
             .findById(commentId)
             .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
     if (!comment.getPost().getId().equals(post.getId())) {
-      throw new BlogAPIException(
-          BAD_REQUEST, COMMENT_NOT_FOUND);
+      throw new BlogAPIException(BAD_REQUEST, COMMENT_NOT_FOUND);
     }
 
     comment.setName(commentDto.getName());
@@ -97,17 +85,13 @@ public class CommentServiceImpl implements CommentService {
 
   @Override
   public void deleteComment(long postId, long commentId) {
-    Post post =
-        postRepository
-            .findById(postId)
-            .orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId));
+    Post post = findPostById(postId);
     Comment comment =
         commentRespository
             .findById(commentId)
             .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
     if (!comment.getPost().getId().equals(post.getId())) {
-      throw new BlogAPIException(
-          BAD_REQUEST, COMMENT_NOT_FOUND);
+      throw new BlogAPIException(BAD_REQUEST, COMMENT_NOT_FOUND);
     }
     commentRespository.deleteById(commentId);
   }
@@ -118,5 +102,11 @@ public class CommentServiceImpl implements CommentService {
 
   public Comment mapToEntity(CommentDto commentDto) {
     return mapper.map(commentDto, Comment.class);
+  }
+
+  private Post findPostById(long postId) {
+    return postRepository
+        .findById(postId)
+        .orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId));
   }
 }
