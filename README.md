@@ -6,6 +6,7 @@ That this project is a WIP and is not yet complete. The following features are s
 - Flyway migrations
 - CI pipeline with gh actions
 - SonarQube integration
+- Kafka integration
 - Docker support
 
 # Spring Boot REST API for Blog Posts and Comments

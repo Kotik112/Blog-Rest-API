@@ -11,26 +11,21 @@ import com.example.blog.service.PostService;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class PostServiceImpl implements PostService {
-
-  private final PostRepository postRepository;
-  private final CategoryRepository categoryRepository;
+  @Autowired
+  private PostRepository postRepository;
+  @Autowired
+  private CategoryRepository categoryRepository;
+  @Autowired
   private ModelMapper mapper;
-
-  public PostServiceImpl(
-      PostRepository postRepository, CategoryRepository categoryRepository, ModelMapper mapper) {
-    this.postRepository = postRepository;
-    this.categoryRepository = categoryRepository;
-    this.mapper = mapper;
-  }
 
   @Override
   public PostDto createPost(PostDto postDto) {
@@ -73,16 +68,16 @@ public class PostServiceImpl implements PostService {
   @Override
   public List<PostDto> getPostsByCategoryId(Long categoryId) {
     Category category = findCategoryByIdOrThrow(categoryId);
-    List<Post> posts = postRepository.findPostsByCategoryId(categoryId);
-    return posts.stream().map((post) -> mapToDto(post)).collect(Collectors.toList());
+    List<Post> posts = postRepository.findPostsByCategoryId(category.getId());
+    return posts.stream().map(this::mapToDto).collect(Collectors.toList());
   }
 
   @Override
-  public PostDto getPostById(@PathVariable(name = "id") Long id) {
+  public PostDto getPostById(Long id) {
     Post post =
         postRepository
             .findById(id)
-            .orElseThrow(() -> new RuntimeException("Post not found with id: " + id));
+            .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
     return mapToDto(post);
   }
 
@@ -115,14 +110,12 @@ public class PostServiceImpl implements PostService {
 
   public PostDto mapToDto(Post post) {
     // Convert Entity to DTO
-    PostDto postDto = mapper.map(post, PostDto.class);
-    return postDto;
+    return mapper.map(post, PostDto.class);
   }
 
   public Post mapToEntity(PostDto postDto) {
     // Convert DTO to Entity
-    Post post = mapper.map(postDto, Post.class);
-    return post;
+    return mapper.map(postDto, Post.class);
   }
 
   private Category findByIdOrThrow(PostDto postDto) {
