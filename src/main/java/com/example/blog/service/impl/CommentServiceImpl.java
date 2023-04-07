@@ -10,15 +10,18 @@ import com.example.blog.repository.PostRepository;
 import com.example.blog.service.CommentService;
 import java.util.List;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @Service
 public class CommentServiceImpl implements CommentService {
 
   private final CommentRespository commentRespository;
   private final PostRepository postRepository;
-  private ModelMapper mapper;
+  private final ModelMapper mapper;
+  
+  private final String COMMENT_NOT_FOUND = "Comment does not belong to the given post";
 
   public CommentServiceImpl(
       CommentRespository commentRespository,
@@ -47,7 +50,7 @@ public class CommentServiceImpl implements CommentService {
   @Override
   public List<CommentDto> getCommentByPostId(long id) {
     List<Comment> commentList = commentRespository.findByPostId(id);
-    return commentList.stream().map(comment -> mapToDto(comment)).toList();
+    return commentList.stream().map(this::mapToDto).toList();
   }
 
   @Override
@@ -63,7 +66,7 @@ public class CommentServiceImpl implements CommentService {
 
     if (!comment.getPost().getId().equals(post.getId())) {
       throw new BlogAPIException(
-          HttpStatus.BAD_REQUEST, "Comment does not belong to the given post");
+          BAD_REQUEST, COMMENT_NOT_FOUND);
     }
 
     return mapToDto(comment);
@@ -81,7 +84,7 @@ public class CommentServiceImpl implements CommentService {
             .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
     if (!comment.getPost().getId().equals(post.getId())) {
       throw new BlogAPIException(
-          HttpStatus.BAD_REQUEST, "Comment does not belong to the given post");
+          BAD_REQUEST, COMMENT_NOT_FOUND);
     }
 
     comment.setName(commentDto.getName());
@@ -104,18 +107,16 @@ public class CommentServiceImpl implements CommentService {
             .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
     if (!comment.getPost().getId().equals(post.getId())) {
       throw new BlogAPIException(
-          HttpStatus.BAD_REQUEST, "Comment does not belong to the given post");
+          BAD_REQUEST, COMMENT_NOT_FOUND);
     }
     commentRespository.deleteById(commentId);
   }
 
   public CommentDto mapToDto(Comment comment) {
-    CommentDto commentDto = mapper.map(comment, CommentDto.class);
-    return commentDto;
+    return mapper.map(comment, CommentDto.class);
   }
 
   public Comment mapToEntity(CommentDto commentDto) {
-    Comment comment = mapper.map(commentDto, Comment.class);
-    return comment;
+    return mapper.map(commentDto, Comment.class);
   }
 }
