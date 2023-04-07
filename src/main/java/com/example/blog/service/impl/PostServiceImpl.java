@@ -20,12 +20,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PostServiceImpl implements PostService {
-  @Autowired
-  private PostRepository postRepository;
-  @Autowired
-  private CategoryRepository categoryRepository;
-  @Autowired
-  private ModelMapper mapper;
+  @Autowired private PostRepository postRepository;
+  @Autowired private CategoryRepository categoryRepository;
+  @Autowired private ModelMapper mapper;
 
   @Override
   public PostDto createPost(PostDto postDto) {
@@ -109,12 +106,10 @@ public class PostServiceImpl implements PostService {
   }
 
   public PostDto mapToDto(Post post) {
-    // Convert Entity to DTO
     return mapper.map(post, PostDto.class);
   }
 
   public Post mapToEntity(PostDto postDto) {
-    // Convert DTO to Entity
     return mapper.map(postDto, Post.class);
   }
 
