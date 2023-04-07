@@ -36,7 +36,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
-public class PostServiceTest {
+class PostServiceTest {
   @InjectMocks PostServiceImpl postService;
   @Mock PostRepository postRepository;
   @Mock private CategoryRepository categoryRepository;
