@@ -2,7 +2,6 @@
 That this project is a WIP and is not yet complete. The following features are still being added (in no particular order):
 - Testcontainers
 - Unit tests
-- Integration tests
 - Flyway migrations
 - CI pipeline with gh actions
 - SonarQube integration
