@@ -166,14 +166,12 @@ class PostServiceTest {
 
   @Test
   void updatePost() {
-    Category category = new Category(1L, "test", "description1", null);
 
     PostDto postDto = new PostDto();
     postDto.setId(1L);
     postDto.setTitle("title");
     postDto.setContent("content");
     postDto.setDescription("description");
-    postDto.setCategoryId(category.getId());
 
     // Expected data
     Post post = new Post();
@@ -181,10 +179,13 @@ class PostServiceTest {
     post.setTitle("title");
     post.setContent("content");
     post.setDescription("description");
-    post.setCategory(category);
 
-    when(modelMapper.map(postDto, Post.class)).thenReturn(post);
+    Category category = new Category(1L, "test", "description1", null);
+    post.setCategory(category);
+    postDto.setCategoryId(category.getId());
+
     when(postRepository.save(post)).thenReturn(post);
+    when(postRepository.findById(anyLong())).thenReturn(Optional.of(post));
     when(modelMapper.map(post, PostDto.class)).thenReturn(postDto);
     when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(category));
 
