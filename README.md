@@ -1,10 +1,9 @@
 # WIP
 That this project is a WIP and is not yet complete. The following features are still being added (in no particular order):
-- Testcontainers
-- Unit tests
+- Unit and Integration tests with JUnit 5 and Mockito :heavy_check_mark:
 - Flyway migrations
 - CI pipeline with gh actions
-- SonarQube integration
+- SonarCloud integration
 - Kafka integration
 - Docker support
 
@@ -13,7 +12,7 @@ This is a portfolio REST API built with Spring Boot that allows users to perform
 
 ## API Endpoints
 - All endpoints have a prefix of ```/api/v1/```. The base URL is omitted in the endpoints below.
-- Make sure to register and login to recieve a functional JWT. Use the JWT to authorize yourself to the endpoints that require admin role.
+- Make sure to register and login to receive a functional JWT. Use the JWT to authorize yourself to the endpoints that require admin role.
 
 ### Authentication
 | Endpoint        | HTTP Method | Description                                        |
@@ -61,9 +60,11 @@ This API uses JWT (JSON Web Tokens) for authentication and authorization. Users 
 - Spring Security
 - Spring Data JPA
 - MySQL
+- Testcontainers
 - Hibernate Validator
 - Lombok
-- SpringDoc OpenAPI 
+- SpringDoc OpenAPI
+
 
 ## Getting Started
 To run the application locally, you will need to have MySQL installed and running. Then, follow these steps:
@@ -71,8 +72,8 @@ To run the application locally, you will need to have MySQL installed and runnin
 - Clone the repository to your local machine.
 - Create a new MySQL database for the application.
 - Edit the ```application.yaml``` file to configure the database connection and other properties as needed.
-- Run the application using your favorite IDE or by running ./mvnw spring-boot:run in the terminal.
+- Run the application using your favorite IDE or by running ```./mvnw spring-boot:run``` in the terminal.
 - Use a REST API client like Postman to interact with the API endpoints. You can also use the Swagger UI to test the API endpoints.
 
 ## License
-This project is licensed under the MIT License - see the MIT_LICENSE file for details.
+This project is licensed under the MIT License - see the ```MIT_LICENSE``` file for details.
