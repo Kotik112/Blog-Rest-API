@@ -71,8 +71,8 @@ To run the application locally, you will need to have MySQL installed and runnin
 - Clone the repository to your local machine.
 - Create a new MySQL database for the application.
 - Edit the ```application.yaml``` file to configure the database connection and other properties as needed.
-- Run the application using your favorite IDE or by running ./mvnw spring-boot:run in the terminal.
+- Run the application using your favorite IDE or by running ```./mvnw spring-boot:run``` in the terminal.
 - Use a REST API client like Postman to interact with the API endpoints. You can also use the Swagger UI to test the API endpoints.
 
 ## License
-This project is licensed under the MIT License - see the MIT_LICENSE file for details.
+This project is licensed under the MIT License - see the ```MIT_LICENSE file``` for details.
