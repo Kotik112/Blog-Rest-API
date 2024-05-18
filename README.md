@@ -1,11 +1,3 @@
-# WIP
-That this project is a WIP and is not yet complete. The following features are still being added (in no particular order):
-- CI pipeline with gh actions
-- SonarQube integration
-- Kafka integration
-- Docker support
-- Frontend
-
 # Spring Boot REST API for Blog Posts and Comments
 This is a portfolio REST API built with Spring Boot that allows users to perform CRUD (Create, Read, Update, Delete) operations on blog posts and comments. The API also provides JWT security to ensure that only authenticated users can access protected resources. Additionally, the API has swagger UI support.
 
